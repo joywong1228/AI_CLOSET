@@ -18,6 +18,8 @@ import { Buffer } from "buffer";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useCloset } from "../context/ClosetContext";
 import uuid from "react-native-uuid";
+import PopupMessage from "../components/PopupMessage"; // adjust the path as needed
+import { MaterialCommunityIcons } from "@expo/vector-icons"; // for icon
 
 const REMOVE_BG_API_KEY = "PHrza2xuAaS4fxRvdnM81u6m";
 
@@ -33,6 +35,7 @@ export default function AddPage() {
   const { addItem, items } = useCloset();
   const [showModal, setShowModal] = useState(false);
   const [newCategory, setNewCategory] = useState("");
+  const [popup, setPopup] = useState({ visible: false, message: "" });
 
   // All categories from closet items (dynamic, includes all previous additions)
   const closetCategories = Array.from(
@@ -109,7 +112,10 @@ export default function AddPage() {
       dateAdded: new Date().toISOString(),
     });
 
-    Alert.alert("Saved!", `Clothing saved in category: ${category}`);
+    setPopup({
+      visible: true,
+      message: `Clothing saved in category: ${category}`,
+    });
     setImageUri(null);
     setProcessedUri(null);
   };
@@ -203,6 +209,18 @@ export default function AddPage() {
           </View>
         </View>
       )}
+      <PopupMessage
+        visible={popup.visible}
+        message={popup.message}
+        icon={
+          <MaterialCommunityIcons
+            name="heart-outline"
+            size={32}
+            color="#d63384"
+          />
+        }
+        onClose={() => setPopup({ ...popup, visible: false })}
+      />
     </SafeAreaView>
   );
 }

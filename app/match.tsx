@@ -18,7 +18,10 @@ export default function MatchPage() {
         <Text style={styles.title}>💘 Outfit Matcher</Text>
         <Text style={styles.subtitle}>Let's style your day, cutie!</Text>
 
-        <TouchableOpacity style={styles.matchButton}>
+        <TouchableOpacity
+          style={styles.matchButton}
+          onPress={() => router.push("/match/choose-style")}
+        >
           <Text style={styles.matchText}>🎀 Choose Your Style</Text>
         </TouchableOpacity>
 
